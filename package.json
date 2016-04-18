@@ -12,6 +12,7 @@
     "axios": "^0.9.1",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "lodash": "^4.11.1",
     "mongoose": "^4.4.12",
     "morgan": "^1.7.0",
     "react": "^0.14.6",
@@ -24,6 +25,7 @@
     "style-loader": "^0.13.0",
     "ts-loader": "^0.7.2",
     "webpack": "^1.13.0",
-    "webpack-dev-middleware": "^1.6.1"
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0"
   }
 }

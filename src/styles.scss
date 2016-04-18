@@ -1,3 +1,69 @@
 body {
-	color: green;
+	text-align: center;
+	font-family: 'Raleway';
+}
+
+#poll-wrapper {
+	display: inline-block;
+	position: relative;
+	width: 1200px;
+}
+
+#poll-list {
+	position: relative;
+	margin: 0 auto;
+	margin-top: 50px;
+	display: inline-block;
+	right: 0;
+	transition: all 0.5s ease;
+	.selected {
+		background-color: black;
+		color: aliceblue;
+	}
+	.poll {
+		margin: 0 auto;
+		width: 100px;
+		padding: 20px;
+		margin-bottom: 5px;
+		border: 1px solid black;
+		transition: 0.2s;
+		cursor: pointer;
+		&:hover {
+			background-color: hsla(0, 0%, 0%, 0.7);
+			color: aliceblue;
+		}
+		&:active {
+			@extend .selected;
+		}
+	}
+}
+
+#poll-list.show-details {
+	right: 360px;
+}
+
+.poll-details {
+	position: absolute;
+	display: inline-block;
+	vertical-align: top;
+	top: 50px;
+	left: 320px;
+	border: 1px solid black;
+	animation-duration: 0.5s;
+	animation-delay: 0.3s;
+	animation-fill-mode: both;
+	animation-name: strech;
+}
+
+@keyframes strech {
+	from {
+		opacity: 0;
+		width: 0px;
+		height: 0px;
+	}
+	to {
+		opacity: 1;
+		width: 800px;
+		height: 653px;
+	}
 }
