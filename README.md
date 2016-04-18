@@ -1,7 +1,31 @@
-Very simple react project skeleton that utilizes webpack with webpack dev server<br>
-to transpile typescript/TSX and SCSS files to a bundle and automatically <br>
-refreshes the local server on changes. 
+Full stack javascript application skeleton. Front end is bundled into one file,
+back end is untransformed ES6. Typescript definition files for libraries that have them
+included.
 
-To start server and listen for changes: <br>
-$ npm start	<br>
-Browser window to: http://localhost:3000/
+# Development Stack:
+
+### Front-End:
+
+* React.js
+* Typescript
+* TSX
+* SCSS
+* Webpack
+
+### Back-End:
+
+* Node.js
+* Express.js
+* ES6
+
+# Usage:
+
+```
+$ npm install
+$ npm start
+```
+
+Navigate browser window to: http://localhost:3000/
+
+Changes to back-end files restart server via nodemon.
+Changes to front-end files triggers webpack update.

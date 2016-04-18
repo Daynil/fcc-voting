@@ -5,15 +5,15 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const webpack = require('webpack');
-const webpackMiddleware = require('webpack-dev-middleware');
-const webpackConfig = require('../webpack.config.js');
 let development = true; // process.env.NODE_ENV !== 'production';
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 if (development) {
+	const webpack = require('webpack');
+	const webpackMiddleware = require('webpack-dev-middleware');
+	const webpackConfig = require('../webpack.config.js');
 	const compiler = webpack(webpackConfig);
 	const middleware = webpackMiddleware(compiler, {
 		publicPath: '/',
