@@ -1,14 +1,19 @@
 {
-  "name": "react-ts-scss-blank",
+  "name": "fullstack-skelly",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Full stack Express React app",
+  "main": "./server/server.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "nodemon ./server/server.js"
   },
   "author": "Daynil",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.9.1",
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.12",
+    "morgan": "^1.7.0",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "typescript": "^1.7.5"
@@ -19,6 +24,7 @@
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
     "ts-loader": "^0.7.2",
+    "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^1.14.0"
   }
 }

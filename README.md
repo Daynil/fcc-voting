@@ -4,4 +4,4 @@ refreshes the local server on changes.
 
 To start server and listen for changes: <br>
 $ npm start	<br>
-Browser window to: http://localhost:3333/
+Browser window to: http://localhost:3000/
