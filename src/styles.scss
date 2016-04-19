@@ -3,6 +3,37 @@ body {
 	font-family: 'Raleway';
 }
 
+.button {
+	display: inline-block;
+	padding: 10px;
+	border: 1px solid black;
+	color: black;
+	transition: 0.2s;
+	cursor: pointer;
+	&:hover {
+		background-color: hsla(0, 0%, 0%, 0.7);
+		color: aliceblue;
+	}
+	&:active {
+		background-color: black;
+	}
+}
+
+
+#header {
+	h1 {
+		display: inline-block;
+	}
+	#menu {
+		position: absolute;
+		right: 20%;
+		top: 2%;
+		width: 175px;
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
 #poll-wrapper {
 	display: inline-block;
 	position: relative;
@@ -33,7 +64,7 @@ body {
 			color: aliceblue;
 		}
 		&:active {
-			@extend .selected;
+			background-color: black;
 		}
 	}
 }

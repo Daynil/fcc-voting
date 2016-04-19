@@ -1,7 +1,28 @@
 import * as React from 'react';
+import { Link } from 'react-router';
 import * as _ from 'lodash';
 
-class App extends React.Component<any, any> {
+class Wrapper extends React.Component<any, any> {
+	
+	render() {
+		return (
+			<div id="wrapper">
+				<div id="header">
+					<h1>FCC Voting App</h1>
+					<div id="menu">
+						<Link to={'/new-poll'}><div className="button">New Poll</div></Link>
+						<Link to={'/log-in'}><div className="button">Log In</div></Link>
+					</div>
+				</div>
+				<div>
+					{this.props.children}
+				</div>
+			</div>
+		);
+	}
+}
+
+class PollContainer extends React.Component<any, any> {
 	
 	constructor() {
 		super();
@@ -37,15 +58,12 @@ class App extends React.Component<any, any> {
 				poll={this.state.selectedPoll} />
 		);
 		return (
-			<div id="wrapper">
-				<h1>FCC Voting App</h1>
-				<div id="poll-wrapper">
-					<PollsList
-						polls={this.state.polls}
-						selectedPoll={this.state.selectedPoll}
-						pollClick={(e, pollClicked) => this.pollClick(e, pollClicked)} />
-					{details}
-				</div>
+			<div id="poll-wrapper">
+				<PollsList
+					polls={this.state.polls}
+					selectedPoll={this.state.selectedPoll}
+					pollClick={(e, pollClicked) => this.pollClick(e, pollClicked)} />
+				{details}
 			</div>
 		);
 	}
@@ -68,11 +86,13 @@ class PollsList extends React.Component<any, any> {
 	render() {
 		let polls = this.props.polls.map((poll, index) => {
 			return (
-				<div 
-					className={this.getPollClass(poll)}
-					key={index}
-					onClick={(e) => this.props.pollClick(e, poll)}>
-					{poll.name}
+				<div>
+					<div 
+						className={this.getPollClass(poll)}
+						key={index}
+						onClick={(e) => this.props.pollClick(e, poll)}>
+						{poll.name}
+					</div>
 				</div>
 			)
 		})
@@ -92,4 +112,24 @@ class PollDetails extends React.Component<any, any> {
 	}
 }
 
-export default App;
+class NewPoll extends React.Component<any, any> {
+	render() {
+		return (
+			<div>
+				New Poll!!
+			</div>
+		);
+	}
+}
+
+class Login extends React.Component<any, any> {
+	render() {
+		return (
+			<div>
+				Log in here!!
+			</div>
+		);
+	}
+}
+
+export { Wrapper, PollContainer, NewPoll, Login };
