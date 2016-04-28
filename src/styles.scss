@@ -28,7 +28,7 @@ body {
 		position: absolute;
 		right: 20%;
 		top: 2%;
-		width: 175px;
+		width: 250px;
 		display: flex;
 		justify-content: space-between;
 	}
@@ -96,5 +96,11 @@ body {
 		opacity: 1;
 		width: 800px;
 		height: 653px;
+	}
+}
+
+#new-poll {
+	#new-choices {
+		margin-bottom: 20px;
 	}
 }
