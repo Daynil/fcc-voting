@@ -12,19 +12,38 @@ class Wrapper extends React.Component<any, any> {
 	constructor() {
 		super();
 		this.state = {
-			loggedIn: false
+			loggedIn: false,
+			polls: [],
+			selectedPoll: null
 		}
 	}
 	
 	componentWillMount() {
 		this.checkLoggedState();
+		for (let i = 0; i < 10; i++) {
+			this.state.polls.push({
+				name: _.random(100, 999)
+			});
+		}
+		this.refreshState();
+	}
+	
+	refreshState() {
+		this.setState({loggedIn: this.state.loggedIn, polls: this.state.polls, selectedPoll: this.state.selectedPoll});
+	}
+	
+	pollClick(e, pollClicked) {
+		this.state.selectedPoll = pollClicked;
+		this.refreshState();
 	}
 	
 	checkLoggedState() {
+		let comp = this;
 		isLoggedIn().then(res => {
 			let isLoggedIn = res.data;
-			if (isLoggedIn) this.setState({loggedIn: true});
-			else this.setState({loggedIn: false});
+			if (isLoggedIn) this.state.loggedIn = true;
+			else this.state.loggedIn = false;
+			comp.refreshState();
 		});
 	}
 	
@@ -74,7 +93,7 @@ class Wrapper extends React.Component<any, any> {
 					</div>
 				</div>
 				<div>
-					{this.props.children}
+					{React.cloneElement(this.props.children, {state: this.state, pollClick: (e, pollClicked) => this.pollClick(e, pollClicked)})}
 				</div>
 			</div>
 		);
@@ -83,45 +102,23 @@ class Wrapper extends React.Component<any, any> {
 
 class PollContainer extends React.Component<any, any> {
 	
-	constructor() {
-		super();
-		this.state = {
-			polls: [],
-			selectedPoll: null
-		}
-	}
-	
 	componentWillMount() {
-		for (let i = 0; i < 10; i++) {
-			this.state.polls.push({
-				name: _.random(100, 999)
-			});
-		}
-		this.refreshState();
-	}
-	
-	refreshState() {
-		this.setState({polls: this.state.polls, selectedPoll: this.state.selectedPoll});
-	}
-	
-	pollClick(e, pollClicked) {
-		this.state.selectedPoll = pollClicked;
-		this.refreshState();
+		console.log(this.props);
 	}
 	
 	render() {
 		let details;
-		if (this.state.selectedPoll === null) details = null;
+		if (this.props.state.selectedPoll === null) details = null;
 		else details = (
 			<PollDetails
-				poll={this.state.selectedPoll} />
+				poll={this.props.state.selectedPoll} />
 		);
 		return (
 			<div id="poll-wrapper">
 				<PollsList
-					polls={this.state.polls}
-					selectedPoll={this.state.selectedPoll}
-					pollClick={(e, pollClicked) => this.pollClick(e, pollClicked)} />
+					polls={this.props.state.polls}
+					selectedPoll={this.props.state.selectedPoll}
+					pollClick={(e, pollClicked) => this.props.pollClick(e, pollClicked)} />
 				{details}
 			</div>
 		);
