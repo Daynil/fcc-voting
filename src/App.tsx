@@ -3,16 +3,13 @@ import { Link } from 'react-router';
 import * as _ from 'lodash';
 import * as axios from 'axios';
 
-function isLoggedIn() {
-	return axios.get('/auth/checkCreds');
-}
-
 class Wrapper extends React.Component<any, any> {
 	
 	constructor() {
 		super();
 		this.state = {
 			loggedIn: false,
+			userID: null,
 			polls: [],
 			selectedPoll: null
 		}
@@ -29,7 +26,16 @@ class Wrapper extends React.Component<any, any> {
 	}
 	
 	refreshState() {
-		this.setState({loggedIn: this.state.loggedIn, polls: this.state.polls, selectedPoll: this.state.selectedPoll});
+		this.setState({
+			loggedIn: this.state.loggedIn, 
+			userID: this.state.userID,
+			polls: this.state.polls, 
+			selectedPoll: this.state.selectedPoll
+		});
+	}
+	
+	isLoggedIn() {
+		return axios.get('/auth/checkCreds');
 	}
 	
 	pollClick(e, pollClicked) {
@@ -39,10 +45,17 @@ class Wrapper extends React.Component<any, any> {
 	
 	checkLoggedState() {
 		let comp = this;
-		isLoggedIn().then(res => {
-			let isLoggedIn = res.data;
-			if (isLoggedIn) this.state.loggedIn = true;
-			else this.state.loggedIn = false;
+		this.isLoggedIn().then((res: any) => {
+			let isLoggedIn = res.data.isAuthenticated;
+			if (isLoggedIn) {
+				this.state.loggedIn = true;
+				this.state.userID = res.data.userID;
+				console.log(res.data.userID);
+			}
+			else {
+				this.state.loggedIn = false;
+				this.state.userID = null;
+			}
 			comp.refreshState();
 		});
 	}
@@ -63,7 +76,7 @@ class Wrapper extends React.Component<any, any> {
 	
 	loginText() {
 		let loginText = '';
-		isLoggedIn().then(res => {
+		this.isLoggedIn().then(res => {
 			let loggedIn = res.data;
 			if (loggedIn) loginText = 'Log Out';
 			else loginText = 'Log In';
@@ -93,7 +106,13 @@ class Wrapper extends React.Component<any, any> {
 					</div>
 				</div>
 				<div>
-					{React.cloneElement(this.props.children, {state: this.state, pollClick: (e, pollClicked) => this.pollClick(e, pollClicked)})}
+					{React.cloneElement(
+						this.props.children, 
+						{ 
+							state: this.state, 
+							pollClick: (e, pollClicked) => this.pollClick(e, pollClicked)
+						}
+					)}
 				</div>
 			</div>
 		);
@@ -171,15 +190,23 @@ class PollDetails extends React.Component<any, any> {
 class NewPoll extends React.Component<any, any> {
 	newPoll: Poll;
 	
+	questionRef;
+	choicesRef;
+	
+	createPoll() {
+		console.log(this.props);
+		//this.newPoll.creator ;
+	}
+	
 	render() {
 		return (
 			<div id="new-poll">
 				<h1>Create a new poll!</h1>
 				<p>Question: </p>
-				<input id="new-question" type="text"></input>
+				<input id="new-question" type="text" ref={(ref) => this.questionRef = ref}></input>
 				<p>Choices (comma separated): </p>
-				<input id="new-choices" type="text"></input><br/>
-				<div className="button">Create</div>
+				<input id="new-choices" type="text" ref={(ref) => this.choicesRef = ref}></input><br/>
+				<div className="button" onClick={this.createPoll}>Create</div>
 			</div>
 		);
 	}

@@ -5,11 +5,11 @@ let User = require('../models/users');
 let configAuth = require('./auth');
 
 module.exports = (passport) => {
-	passport.serializeUser( (user, done) => done(null, user));
+	passport.serializeUser( (user, done) => done(null, user.id));
 	
-	passport.deserializeUser( (user, done) => {
-		//User.findById(id, (err, user) => done(err, user));
-		done(null, user);
+	passport.deserializeUser( (id, done) => {
+		User.findById(id, (err, user) => done(err, user));
+		//done(null, user);
 	});
 	
 	passport.use(new GitHubStrategy({
@@ -19,8 +19,8 @@ module.exports = (passport) => {
 	},
 	(token, refreshToken, profile, done) => {
 
-			done(null, profile);
-/*			User.findOne({ 'githubID': profile.id }, (err, user) => {
+			//done(null, profile);
+			User.findOne({ 'githubID': profile.id }, (err, user) => {
 				if (err) done(err);
 				if (user) done(null, user);
 				else {
@@ -35,7 +35,6 @@ module.exports = (passport) => {
 						return done(null, newUser);
 					})
 				}
-			});*/
-
+			});
 	}));
 }
